@@ -6,13 +6,10 @@
 <!--
     Checkstyle configuration that checks the Google coding conventions from Google Java Style
     that can be found at https://google.github.io/styleguide/javaguide.html
-
     Checkstyle is very configurable. Be sure to read the documentation at
     http://checkstyle.org (or in your downloaded distribution).
-
     To completely disable a check, just comment it out or delete it from the file.
     To suppress certain violations please review suppression filters.
-
     Authors: Max Vetrenko, Ruslan Diachenko, Roman Ivanov.
  -->
 
@@ -29,7 +26,7 @@
     </module>
     <!-- https://checkstyle.org/config_filters.html#SuppressionFilter -->
     <module name="SuppressionFilter">
-        <property name="file" value="${config_loc}/suppressions.xml"/>
+        <property name="file" value="${config_loc}/checkstyle-suppressions.xml" />
     </module>
 
     <!-- Checks for whitespace                               -->
@@ -40,11 +37,14 @@
 
 <!--    <module name="LineLength">-->
 <!--        <property name="fileExtensions" value="java"/>-->
-<!--        <property name="max" value="100"/>-->
-<!--        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>-->
 <!--    </module>-->
 
     <module name="TreeWalker">
+<!--        <module name="LineLength">-->
+<!--            <property name="fileExtensions" value="java"/>-->
+<!--            <property name="max" value="100"/>-->
+<!--            <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>-->
+<!--        </module>-->
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">
             <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
@@ -74,7 +74,7 @@
         </module>
         <module name="LeftCurly">
             <property name="tokens"
-                      value="ANNOTATION_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF,
+                      value="ANNOTATION_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF, ENUM_DEF,
                     INTERFACE_DEF, LAMBDA, LITERAL_CASE, LITERAL_CATCH, LITERAL_DEFAULT,
                     LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF,
                     LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, METHOD_DEF,
@@ -93,12 +93,11 @@
                       value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
                     INSTANCE_INIT"/>
         </module>
-<!--        <module name="SuppressionXpathSingleFilter">-->
-<!--            &lt;!&ndash; suppresion is required till https://github.com/checkstyle/checkstyle/issues/7541 &ndash;&gt;-->
-<!--            <property name="id" value="RightCurlyAlone"/>-->
-<!--            <property name="query" value="//RCURLY[parent::SLIST[count(./*)=1]-->
-<!--                                                 or preceding-sibling::*[last()][self::LCURLY]]"/>-->
-<!--        </module>-->
+        <module name="WhitespaceAfter">
+            <property name="tokens"
+                      value="COMMA, SEMI, TYPECAST, LITERAL_IF, LITERAL_ELSE,
+                    LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, DO_WHILE"/>
+        </module>
         <module name="WhitespaceAround">
             <property name="allowEmptyConstructors" value="true"/>
             <property name="allowEmptyLambdas" value="true"/>
@@ -127,7 +126,7 @@
         <module name="ModifierOrder"/>
         <module name="EmptyLineSeparator">
             <property name="tokens"
-                      value="PACKAGE_DEF, IMPORT, STATIC_IMPORT, CLASS_DEF, INTERFACE_DEF,
+                      value="PACKAGE_DEF, IMPORT, STATIC_IMPORT, CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
                     STATIC_INIT, INSTANCE_INIT, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
             <property name="allowNoEmptyLineBetweenFields" value="true"/>
         </module>
@@ -164,7 +163,7 @@
                      value="Package name ''{0}'' must match pattern ''{1}''."/>
         </module>
         <module name="TypeName">
-            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF"/>
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF"/>
             <message key="name.invalidPattern"
                      value="Type name ''{0}'' must match pattern ''{1}''."/>
         </module>
@@ -219,19 +218,19 @@
             <message key="ws.notPreceded"
                      value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
         </module>
-        <module name="Indentation">
-            <property name="basicOffset" value="2"/>
-            <property name="braceAdjustment" value="0"/>
-            <property name="caseIndent" value="2"/>
-            <property name="throwsIndent" value="4"/>
-            <property name="lineWrappingIndentation" value="4"/>
-            <property name="arrayInitIndent" value="2"/>
-        </module>
+<!--        <module name="Indentation">-->
+<!--            <property name="basicOffset" value="2"/>-->
+<!--            <property name="braceAdjustment" value="0"/>-->
+<!--            <property name="caseIndent" value="2"/>-->
+<!--            <property name="throwsIndent" value="4"/>-->
+<!--            <property name="lineWrappingIndentation" value="4"/>-->
+<!--            <property name="arrayInitIndent" value="2"/>-->
+<!--        </module>-->
         <module name="AbbreviationAsWordInName">
             <property name="ignoreFinal" value="false"/>
             <property name="allowedAbbreviationLength" value="1"/>
             <property name="tokens"
-                      value="CLASS_DEF, INTERFACE_DEF, ANNOTATION_FIELD_DEF,
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, ANNOTATION_FIELD_DEF,
                     PARAMETER_DEF, VARIABLE_DEF, METHOD_DEF"/>
         </module>
         <module name="OverloadMethodsDeclarationOrder"/>
@@ -249,7 +248,8 @@
         </module>
         <module name="NoWhitespaceBefore">
             <property name="tokens"
-                      value="COMMA, SEMI, POST_INC, POST_DEC, DOT, ELLIPSIS, METHOD_REF"/>
+                      value="COMMA, SEMI, POST_INC, POST_DEC, DOT,
+                     METHOD_REF"/>
             <property name="allowLineBreaks" value="true"/>
         </module>
         <module name="ParenPad">
@@ -268,7 +268,7 @@
         <module name="AnnotationLocation">
             <property name="id" value="AnnotationLocationMostCases"/>
             <property name="tokens"
-                      value="CLASS_DEF, INTERFACE_DEF, METHOD_DEF, CTOR_DEF"/>
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF"/>
         </module>
         <module name="AnnotationLocation">
             <property name="id" value="AnnotationLocationVariables"/>
@@ -276,7 +276,6 @@
             <property name="allowSamelineMultipleAnnotations" value="true"/>
         </module>
         <module name="NonEmptyAtclauseDescription"/>
-<!--        <module name="InvalidJavadocPosition"/>-->
         <module name="JavadocTagContinuationIndentation"/>
         <module name="SummaryJavadoc">
             <property name="forbiddenSummaryFragments"
@@ -286,7 +285,7 @@
         <module name="AtclauseOrder">
             <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
             <property name="target"
-                      value="CLASS_DEF, INTERFACE_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
         </module>
         <module name="JavadocMethod">
             <property name="scope" value="public"/>
@@ -311,7 +310,7 @@
         </module>
         <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
         <module name="SuppressionXpathFilter">
-            <property name="file" value="${config_loc}/suppressions-xpath.xml"/>
+            <property name="file" value="${config_loc}/checkstyle-suppressions-xpath.xml" />
         </module>
     </module>
 </module>
