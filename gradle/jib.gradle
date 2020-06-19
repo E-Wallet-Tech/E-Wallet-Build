@@ -1,4 +1,4 @@
-# apply plugin: "com.google.cloud.tools.jib"
+// apply plugin: "com.google.cloud.tools.jib"
 
 // Add Jib build Docker image
 jib {
