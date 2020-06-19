@@ -65,7 +65,7 @@ publishing {
                 password = ossPass
             }
 
-            def nexusHost = "http://nexus.greenconnect.tech/"
+            def nexusHost = "https://nexus.greenconnect.tech/"
             if(isBuildSnapshot) {
                 url  nexusHost + "repository/maven-snapshots"
             }
