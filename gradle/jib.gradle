@@ -7,5 +7,6 @@ jib {
     }
     container {
         mainClass = project.mainClassName
+        creationTime = "USE_CURRENT_TIMESTAMP"
     }
 }
